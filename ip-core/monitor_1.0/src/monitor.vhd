@@ -432,13 +432,8 @@ begin
                     when S_CAPTURE =>
                         -- Clean initial conditions (just a pulse)
                         initial_conditions <= '0';
-                        -- The stop bit is a priority
-                        if stop = '1' then
-                            -- Move to ADC busy state
-                            state        <= S_ADC_BUSY;
-                            capture_step <= S_ADC_START;
                         -- Keep capturing until the power or traces brams are full
-                        elsif power_bram_full = '1' or traces_bram_full = '1' or power_errors_count = POWER_MEASUREMENT_FAILURE then
+                        if stop = '1' or power_bram_full = '1' or traces_bram_full = '1' or power_errors_count = POWER_MEASUREMENT_FAILURE then
                             -- When any bram is full move to Read state
                             state        <= S_READ;
                             capture_step <= S_ADC_START;
